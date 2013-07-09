@@ -1,0 +1,72 @@
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
+
+header > h1 {
+	margin-top: 0;
+	text-transform: uppercase;
+	font-size: 2.3em;
+}
+
+.container-fluid {
+	margin: 10px;
+    height: calc(100% - 50px);
+    height: -webkit-calc(100% - 50px);
+	height: -moz-calc(100% - 50px);
+}
+
+.content.row-fluid {
+	height: calc(100% - 80px);
+	height: -webkit-calc(100% - 80px);
+	height: -moz-calc(100% - 80px);
+}
+
+.loading {
+	position: relative;
+}
+
+.loading:before {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	border-radius: 5px;
+	-moz-transition: opacity .5s;
+	-webkit-transition: opacity .5s;
+	transition: opacity .5s;
+	background: black url(../img/loading.gif) no-repeat 50% 50%;
+	content: "";
+	display: block;
+	opacity: .4;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+}
+
+.content.row-fluid > div,
+.content.row-fluid > div > .sidebar-nav {
+	height: 100%;
+}
+
+#testsNav, #errorResults {
+	margin: 0;
+    overflow: scroll;
+    height: calc(100% - 20px);
+    height: -webkit-calc(100% - 20px);
+	height: -moz-calc(100% - 20px);
+    padding: 10px;
+}
+
+#errorResults {
+    list-style: none;
+    margin: 0;
+    padding-top: 0;
+}
+
+#errorResults > li {
+    margin-bottom: 22px;
+}
+
+#jobForm > * {
+	margin-bottom: 0;
+}

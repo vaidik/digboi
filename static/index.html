@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Find Out</title>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.4/angular-strap.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/jobs.js"></script>
+</head>
+<body>
+    <div class="container-fluid" ng-app="FindOut" ng-controller="Jobs" ng-init="init()">
+        <div class="row-fluid">
+            <header class="span3">
+                <h1>Digboi</h1>
+            </header>
+            <div class="span9">
+                <form id="jobForm" ng-submit="get_job_tests(job_name)">
+                    <input type="text" placeholder="Server" disabled value="WebQA Jenkins Server">
+                    <input type="text" placeholder="Loading jobs..." id="job_name" ng-model="job_name" bs-typeahead="jobs" disabled>
+                    <input type="button" value="Go" class="btn btn-info" ng-click="get_job_tests(job_name)">
+                </form>
+            </div>
+        </div>
+        <div class="row-fluid content">
+            <div class="span3">
+                <div class="sidebar-nav">
+                    <ul class="well nav nav-list" id="testsNav">
+                        <li class="nav-header">Tests</li>
+                        <li ng-repeat="test in tests" ng-click="get_test_details(test)" ng-class="{active: selected_test == test}">
+                            <a href="#">{{test}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span9">
+                <ul id="errorResults">
+                    <li ng-repeat="error in errors">
+                        <div class="stacktrace"><pre>{{error.stacktrace}}</pre></div>
+                        <div class="alert">
+                            <span class="badge badge-important">{{error.count}}</span>
+                            <span ng-repeat="build in error.builds">{{build}} &nbsp;</span>
+                        </div>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
