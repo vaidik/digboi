@@ -1,5 +1,6 @@
 import hashlib
 import json
+import re
 
 from jenkinsapi.jenkins import Jenkins
 
@@ -42,7 +43,6 @@ def get_job_tests(server, job_name):
                 except KeyError:
                     crap[result[0]] = [build_num]
 
-    #return dict(crap=crap)
     return list(tests)
 
 
@@ -69,8 +69,8 @@ def get_test_data(server, job_name, test):
             try:
                 resultset = build.get_resultset()
                 for result in resultset.items():
-                    if result[0] == test and result[1].status == 'FAILED':
-                        error = result[1].errorStackTrace
+                    if result[0] == test and (result[1].status == 'FAILED' or 'REGRESSION'):
+                        error = normalize(result[1].errorStackTrace)
 
                         md5 = hashlib.md5(error)
                         key = md5.hexdigest()
@@ -85,6 +85,7 @@ def get_test_data(server, job_name, test):
                             }
                         break
                 else:
+                    import pdb; pdb.set_trace()
                     error = 'Stupid Error %s' % build_num
                     print error
             except Exception, e:
@@ -95,9 +96,14 @@ def get_test_data(server, job_name, test):
     return ret_val
 
 
+def normalize(stack):
+    stack = re.sub(r' (line )(\d+),', r' \1xxx,', stack)
+    return stack
+
+
 def main():
     """
-    findout --server [SERVER] --job [JOB]
+    digboi --server [SERVER] --job [JOB]
     """
     pass
 
